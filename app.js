@@ -2,18 +2,21 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const passport = require('passport');
+const Localstrategy = require("passport-local")
 const bodyparser = require('body-parser')
 const methodoverride = require("method-override")
+
 const User = require("./models/user")
-const Localstrategy = require("passport-local")
 const Comment = require("./models/comment")
-const Subject = require("./models/subject")
-const Discussion = require("./models/discussion")
+const Community = require("./models/community")
+const Post = require("./models/post")
+const SubCommunity = require("./models/subcommunity");
+
+const communityLists = require("./data/data.json");
+
 const flash = require("connect-flash");
-const discussion = require("./models/discussion");
+
 mongoose.connect('mongodb://localhost:27017/db', { useNewUrlParser: true, useUnifiedTopology: true })
-const courseLists = require("./data/data.json");
-const user = require("./models/user");
 const AppError = require("./AppError");
 
 app.set("view engine", "ejs");
@@ -43,11 +46,10 @@ app.use(function (req, res, next) {
 });
 
 app.get("/", function (req, res) {
-    console.log("request for landing page");
     res.render("landing");
 });
 
-app.get("/courses", isLoggedIn, function (req, res) {
+app.get("/communities", isLoggedIn, function (req, res) {
 
     User.findById(req.user._id).exec(function (err, currentUser) {
         if (err) {
@@ -58,9 +60,8 @@ app.get("/courses", isLoggedIn, function (req, res) {
             console.log("courses");
             console.log(currentUser);
             console.log(branch);
-
             console.log(courseLists[branch]);
-            res.render("courses/courses", { courselist: courseLists[branch] });
+            res.render("communities/communities", { courselist: courseLists[branch] });
         }
 
     })
@@ -68,7 +69,7 @@ app.get("/courses", isLoggedIn, function (req, res) {
 
 app.get("/trending/:courseName", isLoggedIn, function (req, res) {
     const sort = { "comments": -1 };
-    Subject.find({ subName: req.params.courseName }).populate("questions").exec(function (err, subject) {
+    Community.find({ subName: req.params.courseName }).populate("questions").exec(function (err, subject) {
         if (err) {
             console.log(err);
             throw new AppError('subject not found with this courseName', 403);
@@ -92,18 +93,18 @@ app.post('/discussions/:id/addtobookmark', isLoggedIn, function (req, res) {
             throw new AppError('User not found', 401);
         }
         else {
-            Discussion.findById(req.params.id).populate("comments").exec(function (err, foundDiscussion) {
+            Post.findById(req.params.id).populate("comments").exec(function (err, foundPost) {
                 if (err) {
                     console.log(err);
                     res.flash('error', 'could not add it');
                     throw new AppError('requested discussion could not be accesed', 401);
                 }
                 else {
-                    currentUser.questionbookmarkedbyme.push(foundDiscussion);
+                    currentUser.questionbookmarkedbyme.push(foundPost);
                     currentUser.save();
                     console.log(currentUser.questionbookmarkedbyme);
                     req.flash("success", "Successfully added to bookmarks");
-                    res.render("discussion/show", { discussion: foundDiscussion, check: true ,currentUser });
+                    res.render("discussion/show", { discussion: foundPost, check: true ,currentUser });
                 }
             })
         }
@@ -118,18 +119,18 @@ app.post('/discussions/:id/removefrombookmark', isLoggedIn, function (req, res) 
             throw new AppError('User not found', 403);
         }
         else {
-            Discussion.findById(req.params.id).populate("comments").exec(function (err, foundDiscussion) {
+            Post.findById(req.params.id).populate("comments").exec(function (err, foundPost) {
                 if (err) {
                     console.log(err);
                     res.flash('error', 'could not remove it');
                     throw new AppError('requested discussion could not be accesed', 401);
                 }
                 else {
-                    currentUser.questionbookmarkedbyme.pull(foundDiscussion);
+                    currentUser.questionbookmarkedbyme.pull(foundPost);
                     currentUser.save();
                     console.log(currentUser.questionbookmarkedbyme);
                     req.flash("success", "Successfully removed from bookmarks");
-                    res.render("discussion/show", { discussion: foundDiscussion, check: false });
+                    res.render("discussion/show", { discussion: foundPost, check: false });
                 }
             })
         }
@@ -242,10 +243,10 @@ app.post("/bookmarked", isLoggedIn, function (req, res) {
 //discussion page
 //########################################################
 
-app.get("/courses/:courseName", isLoggedIn, async (req, res, next) => {
+app.get("/communities/:courseName", isLoggedIn, async (req, res, next) => {
     try {
         const courseName = req.params.courseName;
-        console.log((await Subject.exists({ subName: courseName })));
+        console.log((await Community.exists({ subName: courseName })));
         User.findById(req.user._id).exec(async (err, currentUser) => {
             if (err) {
                 console.log(err);
@@ -265,23 +266,23 @@ app.get("/courses/:courseName", isLoggedIn, async (req, res, next) => {
                     res.redirect("/");
                 }
                 else {
-                    await Subject.exists({ subName: courseName }, function (err, result) {
+                    await Community.exists({ subName: courseName }, function (err, result) {
                         if (!result) {
                             var subject = courseName;
-                            var newSubject = { subName: subject }
-                            Subject.create(newSubject, function (err, newsubject) {
+                            var newCommunity = { subName: subject }
+                            Community.create(newCommunity, function (err, newsubject) {
                                 if (err) {
                                     console.log("error");
                                 }
                                 else {
-                                    console.log(newSubject);
+                                    console.log(newCommunity);
                                     newsubject.save();
                                     res.render("courses/show", { subject: newsubject, courseName: courseName });
                                 }
                             })
                         }
                         else {
-                            Subject.find({ subName: courseName }).populate("questions").exec(function (err, subject) {
+                            Community.find({ subName: courseName }).populate("questions").exec(function (err, subject) {
                                 if (err) {
                                     console.log("something went wrong");
                                     console.log(err);
@@ -301,16 +302,16 @@ app.get("/courses/:courseName", isLoggedIn, async (req, res, next) => {
     }
 })
 
-app.get("/courses/:courseName/new", isLoggedIn, function (req, res) {
+app.get("/communities/:courseName/new", isLoggedIn, function (req, res) {
 
     res.render("courses/new", { courseName: req.params.courseName })
     console.log("form for posting question")
 })
 
-app.post("/courses/:courseName", isLoggedIn, function (req, res) {
+app.post("/communities/:courseName", isLoggedIn, function (req, res) {
     const courseName = req.params.courseName;
 
-    Subject.find({ subName: courseName }).exec(function (err, foundSubject) {
+    Community.find({ subName: courseName }).exec(function (err, foundCommunity) {
         if (err) {
             console.log("something went wrong");
             console.log(err);
@@ -326,20 +327,20 @@ app.post("/courses/:courseName", isLoggedIn, function (req, res) {
             };
             var anonymouslyAsked = req.body.isAnonymous;
             var course = courseName;
-            var newDiscussion = { topic: topic, question: question, author: author, course: course, anonymouslyAsked: anonymouslyAsked };
-            Discussion.create(newDiscussion, function (err, newdiscussion) {
+            var newPost = { topic: topic, question: question, author: author, course: course, anonymouslyAsked: anonymouslyAsked };
+            Post.create(newPost, function (err, newdiscussion) {
                 if (err) {
                     console.log(err);
                     console.log(newdiscussion)
                     throw new AppError();
                 }
                 else {
-                    console.log(foundSubject);
+                    console.log(foundCommunity);
                     console.log(newdiscussion);
-                    console.log(foundSubject[0].subName);
-                    console.log(foundSubject[0].questions);
-                    foundSubject[0].questions.push(newdiscussion);
-                    foundSubject[0].save();
+                    console.log(foundCommunity[0].subName);
+                    console.log(foundCommunity[0].questions);
+                    foundCommunity[0].questions.push(newdiscussion);
+                    foundCommunity[0].save();
                     console.log(newdiscussion);
                     User.findById(req.user._id).exec(function (err, currentUser) {
                         if (err) {
@@ -353,7 +354,7 @@ app.post("/courses/:courseName", isLoggedIn, function (req, res) {
                             console.log(currentUser.totalAsked);
                             currentUser.save();
                             req.flash("success", "Sucessfully posted your question");
-                            res.redirect("/courses/" + courseName);
+                            res.redirect("/communities/" + courseName);
                         }
 
                     })
@@ -369,7 +370,7 @@ app.post("/courses/:courseName", isLoggedIn, function (req, res) {
 //discussion
 app.get("/discussions/:id", isLoggedIn, async (req, res, next) => {
     try {
-        await Discussion.findById(req.params.id).populate("comments").exec(async (err, founddiscussion, next) => {
+        await Post.findById(req.params.id).populate("comments").exec(async (err, founddiscussion, next) => {
             if (err) {
                 console.log(err);
                 next(new AppError());
@@ -406,21 +407,21 @@ app.get("/discussions/:id", isLoggedIn, async (req, res, next) => {
 
 app.get("/discussions/:id/goback", isLoggedIn, function (req, res) {
 
-    Discussion.findById(req.params.id).exec(function (err, founddiscussion) {
+    Post.findById(req.params.id).exec(function (err, founddiscussion) {
         if (err) {
             console.log(err);
             throw new AppError();
         }
         else {
             var courseName = founddiscussion.course;
-            res.redirect("/courses/" + courseName);
+            res.redirect("/communities/" + courseName);
         }
     })
 
 })
 
-app.get("/discussions/:id/edit", checkDiscussionOwnership, function (req, res) {
-    Discussion.findById(req.params.id, function (err, founddiscussion) {
+app.get("/discussions/:id/edit", checkPostOwnership, function (req, res) {
+    Post.findById(req.params.id, function (err, founddiscussion) {
         res.render("discussion/edit", { discussion: founddiscussion });
     });
 })
@@ -452,9 +453,9 @@ app.post("/discussions/:id/comment/:comment_id/like", isLoggedIn, function (req,
 
 
 
-app.put("/discussions/:id", checkDiscussionOwnership, function (req, res) {
+app.put("/discussions/:id", checkPostOwnership, function (req, res) {
     //find and update the correct discussion and redirect
-    Discussion.findByIdAndUpdate(req.params.id, req.body.discussion, function (err, updateddiscussion) {
+    Post.findByIdAndUpdate(req.params.id, req.body.discussion, function (err, updateddiscussion) {
         if (err) {
             res.redirect("/discussions");
 
@@ -465,9 +466,9 @@ app.put("/discussions/:id", checkDiscussionOwnership, function (req, res) {
     })
 });
 
-app.delete("/discussions/:id", checkDiscussionOwnership, function (req, res) {
+app.delete("/discussions/:id", checkPostOwnership, function (req, res) {
     var courseName = '';
-    Discussion.findById(req.params.id).exec(function (err, founddiscussion) {
+    Post.findById(req.params.id).exec(function (err, founddiscussion) {
         if (err) {
             console.log(err);
             throw new AppError();
@@ -477,9 +478,9 @@ app.delete("/discussions/:id", checkDiscussionOwnership, function (req, res) {
 
         }
     })
-    Discussion.findByIdAndRemove(req.params.id, function (err,) {
+    Post.findByIdAndRemove(req.params.id, function (err,) {
         if (err) {
-            res.redirect("/courses/" + courseName);
+            res.redirect("/communities/" + courseName);
         } else {
             User.findById(req.user._id).exec(function (err, currentUser) {
                 if (err) {
@@ -492,7 +493,7 @@ app.delete("/discussions/:id", checkDiscussionOwnership, function (req, res) {
                     currentUser.save();
                     console.log(currentUser.totalAsked);
                     req.flash("success", "Successfully Deleted");
-                    res.redirect("/courses/" + courseName);
+                    res.redirect("/communities/" + courseName);
                 }
             })
 
@@ -502,7 +503,7 @@ app.delete("/discussions/:id", checkDiscussionOwnership, function (req, res) {
 
 //###########################################################################################################
 app.get("/discussions/:id/comments/new", isLoggedIn, function (req, res) {
-    Discussion.findById(req.params.id, function (err, discussion) {
+    Post.findById(req.params.id, function (err, discussion) {
         if (err) {
             console.log("something went wrong");
             throw new AppError();
@@ -513,7 +514,7 @@ app.get("/discussions/:id/comments/new", isLoggedIn, function (req, res) {
 });
 
 app.post("/discussions/:id/comments", isLoggedIn, function (req, res) {
-    Discussion.findById(req.params.id, function (err, discussion) {
+    Post.findById(req.params.id, function (err, discussion) {
         if (err) {
             console.log(err);
             throw new AppError();
@@ -587,14 +588,14 @@ app.delete("/discussions/:id/comments/:comment_id", checkCommentOwnership, funct
         if (err) {
             res.redirect("back");
         } else {
-            Discussion.findById(req.params.id, function (err, foundDiscussion) {
+            Post.findById(req.params.id, function (err, foundPost) {
                 if (err) {
                     console.log(err);
                 }
                 else {
 
-                    foundDiscussion.comments.pull(req.params.comment_id);
-                    foundDiscussion.save();
+                    foundPost.comments.pull(req.params.comment_id);
+                    foundPost.save();
                     User.findById(req.user._id).exec(function (err, currentUser) {
                         currentUser.totalAnswered = currentUser.totalAnswered - 1;
                         currentUser.save();
@@ -611,9 +612,9 @@ app.delete("/discussions/:id/comments/:comment_id", checkCommentOwnership, funct
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function checkDiscussionOwnership(req, res, next) {
+function checkPostOwnership(req, res, next) {
     if (req.isAuthenticated()) {
-        Discussion.findById(req.params.id, function (err, founddiscussion) {
+        Post.findById(req.params.id, function (err, founddiscussion) {
             if (err) {
                 res.redirect("back");
             } else {

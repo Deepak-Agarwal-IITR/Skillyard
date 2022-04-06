@@ -1,48 +1,35 @@
-var mongoose=    require("mongoose");
+var mongoose = require("mongoose");
 var passportLocalMongoose=require("passport-local-mongoose");
-const discussion = require("./discussion");
 
 var UserSchema = new mongoose.Schema({
     username:{
         type: String,
         required: true
-    },
-
-   
-
+    },  
     enrollmentNo:{
         type: Number,
-        //required: true
+        required: true
     },
-
-    branch:{
+    title:{
         type: String,
-        //required: true
+        enum:[]
     },
-
-    questionsaskedbyme:[
+    posts:[
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Discussion"
+            ref: "Post"
         }
     ],
-
-    questionbookmarkedbyme:[
+    communities:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Community"
+    }],
+    comments:[
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Discussion"
-        },
-    ],
-   
-    totalAnswered:{
-        type: Number,
-        default:0
-    },
-
-    totalAsked:{
-        type: Number,
-        default:0
-    }
+            ref: "Comment"
+        }
+    ]
 });
 
 UserSchema.plugin(passportLocalMongoose);
