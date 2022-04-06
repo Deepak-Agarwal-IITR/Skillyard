@@ -5,17 +5,16 @@ var communitySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-
+    owner:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Post"
         }
     ],
-    subCommunities:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "SubCommunity"
-    }],
     members:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

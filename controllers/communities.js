@@ -8,7 +8,7 @@ module.exports.allCommunities = async (req,res)=>{
 module.exports.createNewCommunity = async (req,res)=>{
     const community = new Community(req.body.community)
     community.owner = req.user;
-    community.users.push({uid:req.user._id});
+    community.members.push({uid:req.user._id});
     await community.save();
     req.flash('success',"Created a new community")
     res.redirect("/communities")
@@ -20,15 +20,14 @@ module.exports.renderNewCommunityForm = (req,res)=>{
 
 module.exports.showCommunity = async(req,res)=>{
     const {id} = req.params;
-    const community = await Community.findById(id).populate('users.uid');
-
+    const community = await Community.findById(id).populate('posts');
+    console.log(community)
     res.render('communities/show',{community})
 }
 
 module.exports.renderEditCommunityForm = async(req,res)=>{
     const {id} = req.params;
     const community = await Community.findById(id);
-    
     res.render('communities/edit',{community})
 }
 
@@ -52,7 +51,7 @@ module.exports.joinCommunity = async(req,res)=>{
     const {id} = req.params;
     const community = await Community.findById(id);
 
-    community.users.push({uid:req.user._id});
+    community.members.push({uid:req.user._id});
     await community.save();
     req.flash('success',`You have joined the community ${community.name}`);
     res.redirect(`/communities/${community._id}`)

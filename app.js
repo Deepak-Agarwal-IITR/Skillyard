@@ -10,7 +10,6 @@ const User = require("./models/user")
 const Comment = require("./models/comment")
 const Community = require("./models/community")
 const Post = require("./models/post")
-const SubCommunity = require("./models/subcommunity");
 
 const communityLists = require("./data/data.json");
 
