@@ -8,9 +8,6 @@ const methodoverride = require("method-override")
 const session = require('express-session')
 
 const User = require("./models/user")
-const Comment = require("./models/comment")
-const Community = require("./models/community")
-const Post = require("./models/post")
 
 // const communityLists = require("./data/data.json");
 const userRoutes = require('./routes/users')
