@@ -39,3 +39,9 @@ module.exports.logout = (req,res)=>{
     req.flash('success',"Goodbye!")
     res.redirect('/');
 }
+
+module.exports.bookmarks = async (req,res)=>{
+    const user = await User.findById(req.user._id).populate('bookmarks')
+    const posts = user.bookmarks
+    res.render('bookmarks',{posts})
+}

@@ -2,22 +2,33 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const passport = require('passport');
-const Localstrategy = require("passport-local")
+const LocalStrategy = require("passport-local")
 const bodyparser = require('body-parser')
 const methodoverride = require("method-override")
+const session = require('express-session')
 
 const User = require("./models/user")
 const Comment = require("./models/comment")
 const Community = require("./models/community")
 const Post = require("./models/post")
-const SubCommunity = require("./models/subcommunity");
 
 // const communityLists = require("./data/data.json");
 const userRoutes = require('./routes/users')
 const communityRoutes = require('./routes/communities')
+const postRoutes = require('./routes/posts')
+const commentRoutes = require('./routes/comments')
 const flash = require("connect-flash");
 
-mongoose.connect('mongodb://localhost:27017/db', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost:27017/fairdeal', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", () => {
+    console.log("Database connected")
+})
+
 const AppError = require("./AppError");
 
 app.set("view engine", "ejs");
@@ -59,6 +70,8 @@ app.use((req,res,next)=>{
 
 app.use('/',userRoutes)
 app.use('/communities',communityRoutes)
+app.use('/communities/:id/posts',postRoutes)
+app.use('communtites/:id/posts/:postid/comments',commentRoutes)
 
 app.get('/',(req,res)=>{
     res.render('home');
@@ -74,6 +87,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error',{err});
 })
 
-app.listen(8080, () => {
-    console.log("Listening on 8080")
+app.listen(3000, () => {
+    console.log("Listening on 3000")
 })

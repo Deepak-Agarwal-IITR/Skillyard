@@ -13,10 +13,6 @@ var postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Community"
     },
-    subcommunity: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "SubCommunity"
-    },
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
