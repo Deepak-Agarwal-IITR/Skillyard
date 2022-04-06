@@ -1,21 +1,15 @@
 <%- include('./../partials/header') -%>
 
+<div class="container">
+  <div class="card border-0" style="background-color: #e0fbfc">
+    <div class="card-body">
+      <h1 class="card-title text-center">Trending Discussions</h1>
 
-
-    <div class="container">
-        <div class="card border-0" style="background-color: #e0fbfc">
-            <div class="card-body">
-                <h1 class="card-title text-center">Trending Questions</h1>
-
-                <% subject.questions.forEach(function(question){%>
-                    <%-include('./../partials/questionCard',{question,courseName,currentUser})%>
-                    <%}); %>
-            </div>
-        </div>
+      <% subject.questions.forEach(function(question){%>
+      <%-include('./../partials/questionCard',{question,courseName,currentUser})%>
+      <%}); %>
     </div>
+  </div>
+</div>
 
-
-
-
-
-    <%- include('./../partials/footer') -%>
+<%- include('./../partials/footer') -%>

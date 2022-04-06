@@ -1,43 +1,47 @@
 <%- include('./../partials/header') -%>
-    <!-- Create new discussion -->
+<!-- Create new discussion -->
 
+<div class="container">
+  <div class="card border-0" style="background-color: #e0fbfc">
+    <div class="card-body">
+      <h2 class="card-title text-center"><%=courseName%> - Discussions</h2>
+      <div class="d-flex createNewDiscussion">
+        <a
+          href="/courses/<%= courseName %>/new"
+          class="btn btn-primary align-items-center mr-auto"
+          style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24px"
+            height="24px"
+            fill="currentColor"
+            class="bi bi-plus-circle-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+            />
+          </svg>
+          <span class="d-none d-md-inline">Create new discussion</span>
+        </a>
 
-    <div class="container">
-        <div class="card border-0" style="background-color: #e0fbfc">
-            <div class="card-body">
-                <h2 class="card-title text-center">
-                    <%=courseName%> - Discussions
-                </h2>
-                <div class="d-flex createNewDiscussion">
-                    <a href="/courses/<%= courseName %>/new" class="btn btn-primary align-items-center mr-auto"
-                        style="overflow:hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
-                            class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                        </svg>
-                        <span class="d-none d-md-inline">Create new discussion</span>
+        <form action="/trending/<%= courseName %>" method="get">
+          <button
+            class="btn btn-primary ml-auto"
+            style="display: inline-flex; vertical-align: middle"
+          >
+            <span class="material-icons"> trending_up </span>
+            <span class="d-none d-md-inline">Get Trending Discussions</span>
+          </button>
+        </form>
+      </div>
 
-                    </a>
-
-                    <form action="/trending/<%= courseName %>" method="get">
-                        <button class="btn btn-primary ml-auto" style="display: inline-flex; vertical-align: middle;">
-                            <span class="material-icons">
-                                trending_up
-                            </span>
-                            <span class="d-none d-md-inline">Get Trending questions</span>
-                        </button>
-                    </form>
-                </div>
-
-                <% subject[0].questions.forEach(function(question){%>
-                    <%-include('./../partials/questionCard',{question,courseName,currentUser})%>
-                    <%}); %>
-
-            </div>
-        </div>
+      <% subject[0].questions.forEach(function(question){%>
+      <%-include('./../partials/questionCard',{question,courseName,currentUser})%>
+      <%}); %>
     </div>
+  </div>
+</div>
 
-
-
-    <%- include('./../partials/footer') -%>
+<%- include('./../partials/footer') -%>
