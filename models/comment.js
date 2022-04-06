@@ -1,29 +1,19 @@
-var mongoose= require("mongoose");
+var mongoose = require("mongoose");
 
-var commentSchema= mongoose.Schema({
-    text:{
-       type: String,
-       required: true
+var commentSchema = mongoose.Schema({
+    text: {
+        type: String,
+        required: true
     },
-    noOfLikes:{
-        type: Number,
-        default: 0
-
+    time1: {
+        type: String,
+        default: new Date().toISOString().slice(0, 10)
     },
-
-    time1:{
-        type:String,
-        default:new Date().toISOString().slice(0,10)
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
-    author:{
-        id:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"User"
-        },
-        username:String,
-        role:String
-    },
-    likedby:[
+    likedby: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
@@ -31,4 +21,4 @@ var commentSchema= mongoose.Schema({
     ]
 });
 
-module.exports =mongoose.model("Comment",commentSchema);
+module.exports = mongoose.model("Comment", commentSchema);
