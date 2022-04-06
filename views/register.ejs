@@ -1,0 +1,85 @@
+<%- include('partials/header') -%>
+
+	<div class="container my-5" style="min-width: 310px; width: 25%; height: 70vh;">
+		<div class="d-flex justify-content-center">
+			<h4>Create your account</h4>
+		</div>
+
+		<div>
+			<form action="/register" method="POST" align="center" class="needs-validation" id="form" novalidate>
+				<div class="form-group">
+					<label for="currUsername" class="form-label"><strong>Username</strong></label>
+					<input required type="text" class="form-control" id="currUsername" placeholder="Username"
+						name="username">
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please enter a valid username!
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="currPassword" class="form-label"><strong>Password</strong></label>
+					<input required type="password" class="form-control" id="currPassword" placeholder="Password"
+						name="password">
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please enter a password!
+					</div>
+				</div>
+				<div class="form-group form-check text-bottom">
+					<input type="checkbox" class="form-check-input" onclick="showPassword()">
+					<label class="form-check-label" for="ifCurrentUserAnonymous">Show Password</label>
+				</div>
+
+				<div class="form-group">
+					<label for="currEnroll" class="form-label"><strong>Enrollment Number</strong></label>
+					<input required type="num" class="form-control" id="currEnroll" placeholder="Enrollment Number"
+						pattern="[2][0][0-9]{6}" name="enrollmentNo">
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please enter a Valid Enrollment Number!
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="currBranch" class="form-label"><strong>Branch</strong></label>
+					<select id="currBranch" class="form-control form-select custom-select" name="branch" required>
+						<option selected disabled value="">Choose...</option>
+						<option value="cse">CSE</option>
+						<option value="ece">ECE</option>
+						<option value="ee">EE</option>
+						<option value="msm">MSM</option>
+					</select>
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please select your branch!
+					</div>
+				</div>
+				<div>
+					<button type="submit" class="btn btn-primary w-100">Sign Up</button>
+
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+	<script>
+
+		function showPassword() {
+			var x = document.getElementById("currPassword");
+			if (x.type === "password") {
+				x.type = "text";
+			} else {
+				x.type = "password";
+			}
+		}
+	</script>
+
+	<%- include('partials/footer') -%>
