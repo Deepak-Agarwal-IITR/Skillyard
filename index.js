@@ -26,8 +26,6 @@ db.once("open", () => {
     console.log("Database connected")
 })
 
-const AppError = require("./AppError");
-
 app.set("view engine", "ejs");
 app.use(bodyparser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
