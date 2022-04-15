@@ -2,7 +2,7 @@ const User = require('../models/user');
 const Community = require('../models/community')
 
 module.exports.renderRegister = (req, res) => {
-    res.render('users/register')
+    res.render('register')
 }
 
 module.exports.register = async(req,res)=>{
@@ -26,7 +26,7 @@ module.exports.register = async(req,res)=>{
 }
 
 module.exports.renderLogin = (req,res)=>{
-    res.render('users/login')
+    res.render('login')
 }
 module.exports.login = (req, res) => {
     req.flash('success', 'Welcome Back');
