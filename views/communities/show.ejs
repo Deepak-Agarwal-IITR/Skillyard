@@ -38,7 +38,7 @@
       </div>
 
       <% for(let post of community.posts){%>
-        <%-include('./../partials/questionCard',{post,name: community.name,currentUser})%>
+        <%-include('./../partials/postCard',{community,post,currentUser})%>
       <% } %>
     </div>
   </div>

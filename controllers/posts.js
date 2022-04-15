@@ -16,7 +16,7 @@ module.exports.createPost = async (req, res) => {
     await post.save();
     await community.save();
     req.flash('success', "Added Post")
-    res.redirect(`/communities/${id}/posts`)
+    res.redirect(`/communities/${id}`)
 };
 
 module.exports.bookmarkPost = async (req, res) => {
@@ -32,7 +32,7 @@ module.exports.bookmarkPost = async (req, res) => {
     }
     await post.save();
     await user.save();
-    res.redirect(`/communities/${id}/posts`);
+    res.redirect(`/communities/${id}`);
 };
 
 module.exports.renderEditPostForm = async(req, res) => {
@@ -46,7 +46,7 @@ module.exports.editPost = async (req, res) => {
     const post = await Post.findByIdAndUpdate(postid, { ...req.body.post });
     await post.save()
     req.flash('success', "Updated post")
-    res.redirect(`/communities/${id}/posts`)
+    res.redirect(`/communities/${id}`)
 };
 
 module.exports.deletePost = async (req, res) => {
@@ -54,5 +54,5 @@ module.exports.deletePost = async (req, res) => {
     await Community.findByIdAndUpdate(id,{$pull:{posts:postid}});
     await Post.findByIdAndDelete(postid);
     req.flash('success', "Deleted Post")
-    res.redirect(`/communities/${id}/posts`)
+    res.redirect(`/communities/${id}`)
 };

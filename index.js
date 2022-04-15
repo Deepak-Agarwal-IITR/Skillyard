@@ -8,7 +8,7 @@ const methodoverride = require("method-override")
 const session = require('express-session')
 
 const User = require("./models/user")
-
+const ExpressError = require('./utils/ExpressError')
 // const communityLists = require("./data/data.json");
 const userRoutes = require('./routes/users')
 const communityRoutes = require('./routes/communities')
@@ -66,7 +66,7 @@ app.use((req,res,next)=>{
 app.use('/',userRoutes)
 app.use('/communities',communityRoutes)
 app.use('/communities/:id/posts',postRoutes)
-app.use('communtites/:id/posts/:postid/comments',commentRoutes)
+app.use('/communtites/:id/posts/:postid/comments',commentRoutes)
 
 app.get('/',(req,res)=>{
     res.render('landing');

@@ -25,7 +25,7 @@ module.exports.isCommunityOwner = catchAsync(async(req,res,next) => {
 module.exports.isJoinedInCommunity = catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const community = await Community.findById(id);
-    if(!((community.users.filter(user => user.uid.toString() === req.user._id.toString()).length > 0) || community.owner.equals(req.user._id))){
+    if(!((community.members.filter(user => user.toString() === req.user._id.toString()).length > 0) || community.owner.equals(req.user._id))){
         req.flash('error', "You are not a member of the community.")
         return res.redirect(`/communities/${id}`);
     }
