@@ -16,7 +16,7 @@ const postRoutes = require('./routes/posts')
 const commentRoutes = require('./routes/comments')
 const flash = require("connect-flash");
 
-mongoose.connect('mongodb://localhost:27017/fairdeal', {
+mongoose.connect('mongodb://localhost:27017/skillyard', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });

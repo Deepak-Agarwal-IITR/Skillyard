@@ -4,10 +4,10 @@
 <div class="container">
   <div class="card border-0" style="background-color: #e0fbfc">
     <div class="card-body">
-      <h2 class="card-title text-center"><%=courseName%> - Discussions</h2>
+      <h2 class="card-title text-center"><%=community.name%> - Posts</h2>
       <div class="d-flex createNewDiscussion">
         <a
-          href="/courses/<%= courseName %>/new"
+          href="/communities/<%= community._id %>/posts/new"
           class="btn btn-primary align-items-center mr-auto"
           style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap"
         >
@@ -23,10 +23,10 @@
               d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
             />
           </svg>
-          <span class="d-none d-md-inline">Create new discussion</span>
+          <span class="d-none d-md-inline">Create new post</span>
         </a>
 
-        <form action="/trending/<%= courseName %>" method="get">
+        <form action="/trending/<%= community.name %>" method="get">
           <button
             class="btn btn-primary ml-auto"
             style="display: inline-flex; vertical-align: middle"
@@ -37,9 +37,9 @@
         </form>
       </div>
 
-      <% subject[0].questions.forEach(function(question){%>
-      <%-include('./../partials/questionCard',{question,courseName,currentUser})%>
-      <%}); %>
+      <% for(let post of community.posts){%>
+        <%-include('./../partials/questionCard',{post,name: community.name,currentUser})%>
+      <% } %>
     </div>
   </div>
 </div>
