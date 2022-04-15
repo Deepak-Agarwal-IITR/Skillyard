@@ -5,8 +5,8 @@
     <div class="card-body">
       <h2 class="card-title text-center"><b>My Discussions</b></h2>
 
-      <% currentUser.questionsaskedbyme.forEach(function(question){%>
-      <%-include('./partials/myquestion',{question, currentUser})%> <%}); %>
+      <% currentUser.postsforEach(function(post){%>
+      <%-include('./partials/mypost',{post, currentUser})%> <%}); %>
     </div>
   </div>
 </div>
