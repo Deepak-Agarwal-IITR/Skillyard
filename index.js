@@ -71,7 +71,7 @@ app.use('/communities/:id/posts',postRoutes)
 app.use('communtites/:id/posts/:postid/comments',commentRoutes)
 
 app.get('/',(req,res)=>{
-    res.render('home');
+    res.render('landing');
 })
 
 
