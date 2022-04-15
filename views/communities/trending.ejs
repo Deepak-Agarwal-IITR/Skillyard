@@ -6,7 +6,7 @@
       <h1 class="card-title text-center">Trending Discussions</h1>
 
       <% subject.questions.forEach(function(question){%>
-      <%-include('./../partials/questionCard',{question,courseName,currentUser})%>
+      <%-include('./../partials/postCard',{question,courseName,currentUser})%>
       <%}); %>
     </div>
   </div>

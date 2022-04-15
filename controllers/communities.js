@@ -8,7 +8,7 @@ module.exports.allCommunities = async (req,res)=>{
 module.exports.createNewCommunity = async (req,res)=>{
     const community = new Community(req.body.community)
     community.owner = req.user;
-    community.members.push({uid:req.user._id});
+    community.members.push(req.user._id);
     await community.save();
     req.flash('success',"Created a new community")
     res.redirect("/communities")
@@ -20,7 +20,12 @@ module.exports.renderNewCommunityForm = (req,res)=>{
 
 module.exports.showCommunity = async(req,res)=>{
     const {id} = req.params;
-    const community = await Community.findById(id).populate('posts');
+    const community = await Community.findById(id).populate({
+        path: 'posts',
+        populate: {
+            path: 'author' 
+        }
+    });
     console.log(community)
     res.render('communities/show',{community})
 }
