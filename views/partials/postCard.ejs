@@ -1,10 +1,10 @@
-<div class="card my-4 shadow questionCard">
+<div class="card my-4 shadow postCard">
     <div class="card-header" style="background-color: #ef9188">
         <div class="d-flex align-items-center row justify-content-between">
             <div class="col-md-6 col-sm-12">
                 <p class="card-text mr-auto mb-0" style="text-transform: uppercase; font-size: 22px;">
                     <strong>
-                        <%=question.topic%>
+                        <%=post.topic%>
 
                     </strong>
                 </p>
@@ -12,13 +12,13 @@
             <div class="col-md-6 col-sm-12 text-md-right text-sm-left">
                 <p class="card-text ml-auto ">
                     <small class="text-white">
-                        <%if(question.anonymouslyAsked){%>
-                            Anonymously asked on <%=question.time1%>
-                                <%} else if(question.author.id.equals(currentUser._id)){ %>
-                                    Asked by you on <%=question.time1%>
+                        <%if(post.anonymouslyAsked){%>
+                            Anonymously asked on <%=post.time1%>
+                                <%} else if(post.author._id.equals(currentUser._id)){ %>
+                                    Asked by you on <%=post.time1%>
 
                                         <%} else{%>
-                                            Posted by <%=question.author.username%> on <%=question.time1%>
+                                            Posted by <%=post.author.username%> on <%=post.time1%>
                                                     <%}%>
                     </small>
                 </p>
@@ -27,41 +27,41 @@
     </div>
     <div class="card-body text-muted">
         <h5 class="card-text">
-            <%=question.question%>
+            <%=post.description%>
         </h5>
     </div>
     <div class="card-footer d-flex" style="background-color: #b0e0e6;">
         <div>
-            <a href="/discussions/<%=question.id%>" class="btn btn-success mr-auto">
+            <a href="/posts/<%=post._id%>" class="btn btn-success mr-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-arrow-up-right-circle" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
                         d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z" />
                 </svg>
-                <span class="d-none d-md-inline">View Entire Discussion</span></a>
+                <span class="d-none d-md-inline">View Entire Post</span></a>
         </div>
         <div style="padding-top: 6px; padding-left:8px;">
-            <%if(question.comments.length==1){%>
-                <span class="text-success">(<%=question.comments.length%> Answer)</span>
+            <%if(post.comments.length==1){%>
+                <span class="text-success">(<%=post.comments.length%> Answer)</span>
 
-                <%} else if(question.comments.length>1){%>
-                    <span class="text-success">(<%=question.comments.length%> Answers)</span>
+                <%} else if(post.comments.length>1){%>
+                    <span class="text-success">(<%=post.comments.length%> Answers)</span>
 
                     <%} else {%>
                         <span class="text-danger">(!Unanswered)</span>
                         <%}%>
         </div>
 
-        <%if (question.author.id.equals(currentUser._id)){%>
+        <%if (post.author._id.equals(currentUser._id)){%>
             <div class="d-flex ml-auto">
-                <a href="/discussions/<%=question.id%>/edit" class="btn btn-primary" style="margin-right: 10px;">
+                <a href="/posts/<%=post._id%>/edit" class="btn btn-primary" style="margin-right: 10px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                         viewBox="0 0 16 16">
                         <path
                             d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
                     </svg> <span class="d-none d-md-inline">Edit</span>
                 </a>
-                <form action="/discussions/<%=question.id%>?_method=DELETE" method="POST">
+                <form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
                     <button type="submit" class="btn btn-danger">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">
