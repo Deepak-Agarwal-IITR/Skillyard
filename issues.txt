@@ -1,8 +1,9 @@
 home page: 
 *what is activity in nav bar
+trending
+ranking
 
 community page:
 *community description and owner
 
-
-**---------------------add conditional to render my...,bookmarks only show them after login
+design the error page
