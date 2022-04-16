@@ -3,10 +3,7 @@ home page:
 
 community page:
 *community description and owner
-*join community
 
 *add n edit community form labels not visible
 
-
-**for not unsigned user allow too see posts
 **---------------------add conditional to render my...,bookmarks only show them after login

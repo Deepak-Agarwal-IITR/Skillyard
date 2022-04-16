@@ -32,6 +32,16 @@ module.exports.isJoinedInCommunity = catchAsync(async (req, res, next) => {
     next();
 })
 
+module.exports.isAlreadyJoinedCommunity = catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    const community = await Community.findById(id);
+    if ((community.members.includes(req.user._id) || community.owner.equals(req.user._id))) {
+        req.flash('error', "You are already in the community.")
+        return res.redirect(`/communities/${id}`);
+    }
+    next();
+})
+
 module.exports.isCommentAuthor = catchAsync(async(req,res,next) => {
     const {id,postid,commentid} = req.params;
     const comment = await Comment.findById(commentid);
