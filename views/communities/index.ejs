@@ -2,7 +2,11 @@
 
 <div class="container">
   <div class="list-group">
+    <% if(my==="no"){ %> 
     <h2 class="my-4 text-center" style="color: #c4bbf0">Communities</h2>
+    <% }else{ %> 
+      <h2 class="my-4 text-center" style="color: #c4bbf0">My Communities</h2>
+      <% } %> 
     <a href="/communities/new"> Add Community</a>
     <% for (let community of communities) {%>
       <a
