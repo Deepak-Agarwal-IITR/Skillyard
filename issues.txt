@@ -4,6 +4,5 @@ home page:
 community page:
 *community description and owner
 
-*add n edit community form labels not visible
 
 **---------------------add conditional to render my...,bookmarks only show them after login
