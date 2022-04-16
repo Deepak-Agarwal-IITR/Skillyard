@@ -1,10 +1,17 @@
 const Community = require('../models/community')
+const User = require('../models/user')
 
 module.exports.allCommunities = async (req,res)=>{
     const communities = await Community.find();
     res.render('communities/index',{communities});
 }
 
+
+module.exports.myCommunities = async (req,res)=>{
+    const communities = await Community.find({owner:req.user._id})
+    console.log(communities)
+    res.render('communities/mycommunities',{communities})
+}
 module.exports.createNewCommunity = async (req,res)=>{
     const community = new Community(req.body.community)
     community.owner = req.user;
