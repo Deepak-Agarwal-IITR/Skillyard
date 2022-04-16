@@ -13,7 +13,6 @@ post :
 *add to bookmark not working
 
 comment :
-*like comment not working
 *delete comment,edit comment not working
 *bookmark page not working
 
