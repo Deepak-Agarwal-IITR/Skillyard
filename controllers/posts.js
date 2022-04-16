@@ -32,7 +32,7 @@ module.exports.bookmarkPost = async (req, res) => {
     }
     await post.save();
     await user.save();
-    res.redirect(`/communities/${id}`);
+    res.redirect(`/communities/${id}/posts/${postid}`);
 };
 
 module.exports.renderEditPostForm = async(req, res) => {
