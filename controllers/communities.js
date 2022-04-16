@@ -63,7 +63,7 @@ module.exports.joinCommunity = async(req,res)=>{
     const {id} = req.params;
     const community = await Community.findById(id);
 
-    community.members.push({uid:req.user._id});
+    community.members.push(req.user._id);
     await community.save();
     req.flash('success',`You have joined the community ${community.name}`);
     res.redirect(`/communities/${community._id}`)
