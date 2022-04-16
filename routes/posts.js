@@ -11,10 +11,10 @@ router.route("/")
     .post(isLoggedIn, isJoinedInCommunity, catchAsync(posts.createPost))
 
 router.route('/:postid')
-    .get(isLoggedIn, isJoinedInCommunity, catchAsync(posts.bookmarkPost))
+    .get(isLoggedIn, isJoinedInCommunity, catchAsync(posts.showComments))
     .put(isLoggedIn, isJoinedInCommunity, isPostAuthor, catchAsync(posts.editPost))
     .delete(isLoggedIn, isJoinedInCommunity, isPostAuthor, catchAsync(posts.deletePost))
 
 router.get('/:postid/edit', isLoggedIn,isJoinedInCommunity,isPostAuthor, catchAsync(posts.renderEditPostForm))
-
+router.get('/:postid/bookmark', isLoggedIn,isJoinedInCommunity,isPostAuthor, catchAsync(posts.bookmarkPost))
 module.exports = router;

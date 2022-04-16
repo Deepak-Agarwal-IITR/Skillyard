@@ -66,7 +66,7 @@ app.use((req,res,next)=>{
 app.use('/',userRoutes)
 app.use('/communities',communityRoutes)
 app.use('/communities/:id/posts',postRoutes)
-app.use('/communtites/:id/posts/:postid/comments',commentRoutes)
+app.use('/communities/:id/posts/:postid/comments',commentRoutes)
 
 app.get('/',(req,res)=>{
     res.render('landing');

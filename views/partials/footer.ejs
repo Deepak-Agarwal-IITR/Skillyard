@@ -95,7 +95,7 @@
 
     function myFunction() {
         console.log("comment")
-        var did = document.getElementsByClassName("likeB")[0].getAttribute("discussionID");
+        var did = document.getElementsByClassName("likeB")[0].getAttribute("postID");
         var cid = document.getElementsByClassName("likeB")[0].getAttribute("commentID");
         console.log(did);
         console.log(cid);
@@ -105,7 +105,7 @@
             global: false,
             type: 'POST',
             dataType:'html',
-            url: "/discussions/" + did + "/comment/" + cid + "/like",
+            url: "/communities/"+ "" +"/posts/" + did + "/comments/" + cid + "/like",
             success: function (result) {
                 console.log(result);
             },
