@@ -44,7 +44,7 @@ module.exports.editComment = async (req, res) => {
     const comment = await Comment.findByIdAndUpdate(commentid, { ...req.body.comment });
     await comment.save()
     req.flash('success', "Updated comment")
-    res.redirect(`/communities/${id}/posts/${postid}/comments`)
+    res.redirect(`/communities/${id}/posts/${postid}`)
 };
 
 module.exports.deleteComment = async (req, res) => {

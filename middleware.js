@@ -33,11 +33,11 @@ module.exports.isJoinedInCommunity = catchAsync(async (req, res, next) => {
 })
 
 module.exports.isCommentAuthor = catchAsync(async(req,res,next) => {
-    const {id} = req.params;
-    const comment = await Comment.findById(id);
+    const {id,postid,commentid} = req.params;
+    const comment = await Comment.findById(commentid);
     if(!comment.author.equals(req.user._id)){
         req.flash('error',"You don't have permissions")
-        return res.redirect(`/communities/${id}`);
+        return res.redirect(`/communities/${id}/posts/${postid}`);
     }
     next();
 })
