@@ -22,15 +22,15 @@ module.exports.likeComment = async (req, res) => {
     const { id, postid, commentid } = req.params
     const comment = await Comment.findById(commentid);
 
-    const isLiked = comment.likedBy.includes(req.user._id);
+    const isLiked = comment.likedby.includes(req.user._id);
     
     if(!isLiked){
-        comment.likedBy.push(req.user);
+        comment.likedby.push(req.user);
     } else {
-        comment.likedBy.pull(req.user);
+        comment.likedby.pull(req.user);
     }
     await comment.save();
-    res.redirect(`/communities/${id}/posts/${postid}/comments`);
+    res.redirect(`/communities/${id}/posts/${postid}`);
 };
 
 module.exports.renderEditCommentForm = async(req, res) => {
