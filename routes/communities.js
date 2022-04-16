@@ -3,7 +3,7 @@ const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
 
 const communities = require('../controllers/communities')
-const {isLoggedIn,isCommunityOwner,isJoinedInCommunity} = require('../middleware')
+const {isLoggedIn,isCommunityOwner,isJoinedInCommunity,isAlreadyJoinedCommunity} = require('../middleware')
 
 router.route('/')
     .get(catchAsync(communities.allCommunities))
@@ -20,6 +20,6 @@ router.route('/:id')
 router.route('/:id/edit')
     .get(isLoggedIn,isCommunityOwner,catchAsync(communities.renderEditCommunityForm))
 
-router.post('/:id/join', isLoggedIn, isJoinedInCommunity, catchAsync(communities.joinCommunity))
+router.get('/:id/join', isLoggedIn, isAlreadyJoinedCommunity, catchAsync(communities.joinCommunity))
 
 module.exports = router;
