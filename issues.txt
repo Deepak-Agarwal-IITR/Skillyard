@@ -1,8 +1,17 @@
 home page: 
 *what is activity in nav bar
+<<<<<<< HEAD
+=======
+trending
+ranking
+>>>>>>> 35e59b6fca9af4328ab2ee0fafd64494c61150f5
 
 community page:
 *community description and owner
 
+<<<<<<< HEAD
 
 **---------------------add conditional to render my...,bookmarks only show them after login
+=======
+design the error page
+>>>>>>> 35e59b6fca9af4328ab2ee0fafd64494c61150f5
