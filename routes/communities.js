@@ -9,8 +9,11 @@ router.route('/')
     .get(catchAsync(communities.allCommunities))
     .post(isLoggedIn,catchAsync(communities.createNewCommunity))
 
+<<<<<<< HEAD
 router.get('/mycommunities',isLoggedIn,catchAsync(communities.myCommunities))
 
+=======
+>>>>>>> 35e59b6fca9af4328ab2ee0fafd64494c61150f5
 router.route('/new')
     .get(isLoggedIn,communities.renderNewCommunityForm)
 
