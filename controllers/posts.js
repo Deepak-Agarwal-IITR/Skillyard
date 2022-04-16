@@ -12,6 +12,7 @@ module.exports.createPost = async (req, res) => {
     const community = await Community.findById(id);
     const post = new Post(req.body.post)
     post.author = req.user;
+    post.community = community._id;
     community.posts.push(post)
     await post.save();
     await community.save();
