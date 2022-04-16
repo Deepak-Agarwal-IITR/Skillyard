@@ -11,7 +11,7 @@ router.route("/")
     .post(isLoggedIn, isJoinedInCommunity, catchAsync(posts.createPost))
 
 router.route('/:postid')
-    .get(isLoggedIn, isJoinedInCommunity, catchAsync(posts.showComments))
+    .get(isLoggedIn, catchAsync(posts.showComments))
     .put(isLoggedIn, isJoinedInCommunity, isPostAuthor, catchAsync(posts.editPost))
     .delete(isLoggedIn, isJoinedInCommunity, isPostAuthor, catchAsync(posts.deletePost))
 

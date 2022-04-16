@@ -25,6 +25,16 @@
       >
         <%=community.name%>
       </a>
+      <% if(currentUser && !community.members.includes(currentUser._id)){ %> 
+      <a
+        href="/communities/<%= community._id%>/join"
+        onMouseOver="this.style.color='#ffffff'"
+        onMouseOut="this.style.color='#45046a'"
+        class="btn btn-success"
+      >
+        Join Community
+      </a>
+      <% } %> 
     <% } %>
   </div>
 </div>

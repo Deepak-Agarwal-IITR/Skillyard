@@ -41,7 +41,12 @@ module.exports.logout = (req,res)=>{
 }
 
 module.exports.bookmarks = async (req,res)=>{
-    const user = await User.findById(req.user._id).populate('bookmarks')
+    const user = await User.findById(req.user._id).populate({
+        path: 'bookmarks',
+        populate: {
+            path: 'community' 
+        }
+    })
     const posts = user.bookmarks
     res.render('bookmarks',{posts})
 }
