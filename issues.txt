@@ -8,11 +8,8 @@ community page:
 *add n edit community form labels not visible
 
 
-post :
-*two add to bookmark buttons in view post
-*add to bookmark not working
 
-comment :
+
 *bookmark page not working
 
 
