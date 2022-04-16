@@ -12,6 +12,9 @@ router.route('/')
 router.route('/new')
     .get(isLoggedIn,communities.renderNewCommunityForm)
 
+router.route('/my',isLoggedIn)
+    .get(catchAsync(communities.showMyCommunities))
+
 router.route('/:id')
     .get(catchAsync(communities.showCommunity))
     .put(isLoggedIn,isCommunityOwner,catchAsync(communities.editCommunity))
