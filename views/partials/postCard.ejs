@@ -13,9 +13,9 @@
                 <p class="card-text ml-auto ">
                     <small class="text-white">
                         <%if(post.anonymouslyAsked){%>
-                            Anonymously asked on <%=post.time1%>
+                            Anonymously postedsked on <%=post.time1%>
                                 <%} else if(currentUser && post.author._id.equals(currentUser._id)){ %>
-                                    Asked by you on <%=post.time1%>
+                                    Posted by you on <%=post.time1%>
 
                                         <%} else{%>
                                             Posted by <%=post.author.username%> on <%=post.time1%>
@@ -40,7 +40,7 @@
                 </svg>
                 <span class="d-none d-md-inline">View Entire Post</span></a>
         </div>
-        <div style="padding-top: 6px; padding-left:8px;">
+        <!-- <div style="padding-top: 6px; padding-left:8px;">
             <%if(post.comments.length==1){%>
                 <span class="text-success">(<%=post.comments.length%> Answer)</span>
 
@@ -50,7 +50,7 @@
                     <%} else {%>
                         <span class="text-danger">(!Unanswered)</span>
                         <%}%>
-        </div>
+        </div> -->
 
         <%if (currentUser && post.author._id.equals(currentUser._id)){%>
             <div class="d-flex ml-auto">
