@@ -1,0 +1,48 @@
+<%- include('./../partials/header') %>
+
+<div class="container askquestion">
+  <div class="row">
+    <div class="col-md-6 col-10 mx-auto">
+      <div class="my-5">
+        <h1 class="text-center" style="color: #c4bbf0">Create Community</h1>
+      </div>
+
+      <form
+        class="needs-validation"
+        novalidate
+        action="/communities/<%=community._id>?_method=PUT"
+        method="POST"
+      >
+        <div class="mb-3">
+          <label for="name" class="form-label" style="color: #c4bbf0"
+            ><strong>Name of communtiy</strong>
+          </label>
+          <input
+            class="form-control"
+            type="text"
+            name="community[name]"
+            id="name"
+            value = "<%=community.name>"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label" style="color: #c4bbf0"
+            ><strong>Description: </strong></label
+          >
+          <textarea
+            class="form-control"
+            name="community[description]"
+            id="description"
+            rows="3"
+            value="<%=community.description>"
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-success" type="submit">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('./../partials/footer') %>  
