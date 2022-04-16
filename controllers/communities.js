@@ -13,6 +13,7 @@ module.exports.myCommunities = async (req,res)=>{
     res.render('communities/mycommunities',{communities})
 }
 module.exports.createNewCommunity = async (req,res)=>{
+    console.log(req.body);
     const community = new Community(req.body.community)
     community.owner = req.user;
     community.members.push(req.user._id);
