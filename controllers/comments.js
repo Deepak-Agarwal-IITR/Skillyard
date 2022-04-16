@@ -52,5 +52,5 @@ module.exports.deleteComment = async (req, res) => {
     await Post.findByIdAndUpdate(postid,{$pull:{comments:commentid}});
     await Comment.findByIdAndDelete(commentid);
     req.flash('success', "Deleted Comment")
-    res.redirect(`/communities/${id}/posts/${postid}/comments`)
+    res.redirect(`/communities/${id}/posts/${postid}`)
 };

@@ -9,7 +9,6 @@ const session = require('express-session')
 
 const User = require("./models/user")
 const ExpressError = require('./utils/ExpressError')
-// const communityLists = require("./data/data.json");
 const userRoutes = require('./routes/users')
 const communityRoutes = require('./routes/communities')
 const postRoutes = require('./routes/posts')
