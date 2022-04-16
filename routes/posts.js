@@ -16,5 +16,5 @@ router.route('/:postid')
     .delete(isLoggedIn, isJoinedInCommunity, isPostAuthor, catchAsync(posts.deletePost))
 
 router.get('/:postid/edit', isLoggedIn,isJoinedInCommunity,isPostAuthor, catchAsync(posts.renderEditPostForm))
-router.get('/:postid/bookmark', isLoggedIn,isJoinedInCommunity,isPostAuthor, catchAsync(posts.bookmarkPost))
+router.post('/:postid/bookmark', isLoggedIn,isJoinedInCommunity,catchAsync(posts.bookmarkPost))
 module.exports = router;
