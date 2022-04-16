@@ -1,0 +1,23 @@
+home page: 
+*remove my discussion and replace it with my communities
+*what is activity in nav bar
+
+community page:
+*community description and owner
+*join community
+
+*remove trending discussion on community page
+*add n edit community form labels not visible
+
+
+post :
+*two add to bookmark buttons in view post
+*add to bookmark not working
+* answered and unanswered labels
+* posts still showing asked by
+* back button in post not working
+
+comment :
+*like comment not working
+*delete comment,edit comment not working
+*bookmark page not working
