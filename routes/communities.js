@@ -9,8 +9,6 @@ router.route('/')
     .get(catchAsync(communities.allCommunities))
     .post(isLoggedIn,catchAsync(communities.createNewCommunity))
 
-router.get('/mycommunities',isLoggedIn,catchAsync(communities.myCommunities))
-
 router.route('/new')
     .get(isLoggedIn,communities.renderNewCommunityForm)
 
