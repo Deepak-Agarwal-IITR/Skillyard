@@ -2,7 +2,7 @@ const Community = require('../models/community')
 
 module.exports.allCommunities = async (req,res)=>{
     const communities = await Community.find();
-    res.render('communities/index',{communities});
+    res.render('communities/index',{communities,my:"no"});
 }
 
 module.exports.createNewCommunity = async (req,res)=>{
@@ -60,4 +60,10 @@ module.exports.joinCommunity = async(req,res)=>{
     await community.save();
     req.flash('success',`You have joined the community ${community.name}`);
     res.redirect(`/communities/${community._id}`)
+}
+
+module.exports.showMyCommunities = async(req,res)=>{
+    const communities= await Community.find({$or:[{members: req.user._id},{owner: req.user._id}]}).populate('owner');
+    
+    res.render("communities/index", { communities,my:"yes"})
 }
