@@ -26,7 +26,7 @@ module.exports.showCommunity = async(req,res)=>{
             path: 'author' 
         }
     });
-    console.log(community)
+    // console.log(community)
     res.render('communities/show',{community})
 }
 

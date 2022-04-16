@@ -50,9 +50,20 @@ module.exports.editPost = async (req, res) => {
 };
 
 module.exports.deletePost = async (req, res) => {
-    const { id ,postid     } = req.params
+    const { id ,postid} = req.params
     await Community.findByIdAndUpdate(id,{$pull:{posts:postid}});
     await Post.findByIdAndDelete(postid);
     req.flash('success', "Deleted Post")
     res.redirect(`/communities/${id}`)
 };
+
+module.exports.showComments = async (req,res)=>{
+    const { id ,postid} = req.params
+    const post = await Post.findById(postid).populate({
+        path: 'comments',
+        populate: {
+            path: 'author' 
+        }
+    })
+    res.render('posts/show',{id,post})
+}

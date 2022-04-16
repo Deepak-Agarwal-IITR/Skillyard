@@ -15,7 +15,7 @@ module.exports.createComment = async (req, res) => {
     await comment.save();
     await post.save();
     req.flash('success', "Added Comment")
-    res.redirect(`/communities/${id}/posts/${postid}/comments`)
+    res.redirect(`/communities/${id}/posts/${postid}`)
 };
 
 module.exports.likeComment = async (req, res) => {
