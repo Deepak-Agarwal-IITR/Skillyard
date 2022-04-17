@@ -14,6 +14,9 @@ module.exports.createPost = async (req, res) => {
     post.author = req.user;
     post.community = community._id;
     community.posts.push(post)
+    const user = await User.findById(req.user._id);
+    user.posts.push(post);
+    await user.save();
     await post.save();
     await community.save();
     req.flash('success', "Added Post")

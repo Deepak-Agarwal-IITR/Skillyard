@@ -50,3 +50,13 @@ module.exports.bookmarks = async (req,res)=>{
     const posts = user.bookmarks
     res.render('bookmarks',{posts})
 }
+
+module.exports.ranking = async (req, res) => {
+    await User.findById(req.user._id).exec(async (err, currentUser) => {
+        await User.find().exec(function (err, currentUsers) {
+            console.log(currentUsers)
+            currentUsers.sort((a, b) => (a.posts.length > b.posts.length) ? -1 : ((b.posts.length > a.posts.length) ? 1 : 0));
+            res.render("ranking", { currentUsers, i: 1 });
+        })
+    })
+}
