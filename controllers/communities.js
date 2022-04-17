@@ -1,4 +1,5 @@
 const Community = require('../models/community')
+const ExpressError = require('../utils/ExpressError')
 
 module.exports.allCommunities = async (req,res)=>{
     const communities = await Community.find().populate('owner');
@@ -71,4 +72,18 @@ module.exports.showMyCommunities = async(req,res)=>{
     const communities= await Community.find({$or:[{members: req.user._id},{owner: req.user._id}]}).populate('owner');
     
     res.render("communities/index", { communities,my:"yes"})
+}
+
+module.exports.trending = async (req, res) => {
+    const {id} = req.params;
+    await Community.findById(id).populate("posts").exec(function (err, community) {
+        if (err) {
+            throw new ExpressError('Post not found with this course', 404);
+        }
+        else {
+            community.posts.sort((a, b) => (a.comments.length > b.comments.length) ? -1 : ((b.comments.length > a.comments.length) ? 1 : 0));
+            res.render("communities/trending", { community });
+        }
+    })
+
 }

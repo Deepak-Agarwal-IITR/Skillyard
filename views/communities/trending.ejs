@@ -3,10 +3,18 @@
 <div class="container">
   <div class="card border-0" style="background-color: #e0fbfc">
     <div class="card-body">
-      <h1 class="card-title text-center">Trending Discussions</h1>
+      <a href="/communities/<%=community._id %>" class="btn btn-primary float-left"
+        style="padding: 4px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+            class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg> Back to Community
+    </a>
+      <h1 class="card-title text-center">Trending Posts</h1>
 
-      <% subject.questions.forEach(function(question){%>
-      <%-include('./../partials/postCard',{question,courseName,currentUser})%>
+      <% community.posts.forEach(function(post){%>
+        <%-include('./../partials/postCard',{post,community,currentUser})%>
       <%}); %>
     </div>
   </div>
