@@ -7,12 +7,12 @@
         <h1 class="text-center" style="color: #c4bbf0">Create Community</h1>
       </div>
 
-      <form
+
+      <form 
         class="needs-validation"
-        novalidate
-        action="/communities/<%=community._id>?_method=PUT"
-        method="POST"
-      >
+        novalidate 
+        action="/communities/<%=community._id%>?_method=PUT" 
+        method="post">
         <div class="mb-3">
           <label for="name" class="form-label" style="color: #c4bbf0"
             ><strong>Name of communtiy</strong>
@@ -22,7 +22,7 @@
             type="text"
             name="community[name]"
             id="name"
-            value = "<%=community.name>"
+            value = "<%=community.name%>"
           />
         </div>
         <div class="mb-3">
@@ -34,8 +34,7 @@
             name="community[description]"
             id="description"
             rows="3"
-            value="<%=community.description>"
-          ></textarea>
+          ><%=community.description%></textarea>
         </div>
         <div class="mb-3">
           <button class="btn btn-success" type="submit">Add</button>
