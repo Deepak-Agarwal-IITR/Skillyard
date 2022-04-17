@@ -1,7 +1,7 @@
 {
-  "name": "doubtbottle",
+  "name": "skillyard",
   "version": "1.0.0",
-  "description": "A doubt clearing app",
+  "description": "A platform to create communities, for like minded people with shared interests.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
