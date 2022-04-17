@@ -1,8 +1,7 @@
 const Community = require('../models/community')
-const User = require('../models/user')
 
 module.exports.allCommunities = async (req,res)=>{
-    const communities = await Community.find();
+    const communities = await Community.find().populate('owner');
     res.render('communities/index',{communities,my:"no"});
 }
 
@@ -13,7 +12,6 @@ module.exports.myCommunities = async (req,res)=>{
     res.render('communities/mycommunities',{communities})
 }
 module.exports.createNewCommunity = async (req,res)=>{
-    console.log(req.body);
     const community = new Community(req.body.community)
     community.owner = req.user;
     community.members.push(req.user._id);
@@ -34,7 +32,6 @@ module.exports.showCommunity = async(req,res)=>{
             path: 'author' 
         }
     });
-    // console.log(community)
     res.render('communities/show',{community})
 }
 

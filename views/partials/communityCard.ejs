@@ -2,6 +2,10 @@
 <div class="card my-4 shadow postCard">
   <div class="card-header" >
     <div class="d-flex align-items-center row justify-content-between">
+      <a
+        href="/communities/<%= community._id%>"
+       
+      >
       <div class="col-md-6 col-sm-12">
         <p
           class="card-text mr-auto mb-0"
@@ -10,9 +14,10 @@
           <strong> <%=community.name%> </strong>
         </p>
       </div>
+    </a>
       <div class="col-md-6 col-sm-12 text-md-right text-sm-left">
         <p class="card-text ml-auto">
-          <small class="text-white">
+          <small class="text-black">
             Owner : <%=community.owner.username%>
           </small>
         </p>
