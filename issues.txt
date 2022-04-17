@@ -1,9 +1,5 @@
 home page: 
 *what is activity in nav bar
-trending
 ranking
-
-community page:
-*community description and owner
 
 design the error page
