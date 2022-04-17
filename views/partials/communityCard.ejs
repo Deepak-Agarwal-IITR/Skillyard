@@ -23,6 +23,7 @@
     <h5 class="card-text"><%=community.description  %></h5>
   </div>
   <div class="card-footer d-flex" style="background-color: #b0e0e6">
+    <%if(currentUser && !community.members.includes(currentUser._id)){ %> 
     <div>
       <a
         href="/communities/<%=community._id %>/join"
@@ -44,6 +45,7 @@
         <span class="d-none d-md-inline">Join</span></a
       >
     </div>
+    <% } %> 
 
 
     <%if (currentUser && community.owner._id.equals(currentUser._id)){%>
