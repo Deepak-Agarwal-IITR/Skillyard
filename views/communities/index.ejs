@@ -9,38 +9,9 @@
       <% } %> 
     <a href="/communities/new"> Add Community</a>
     <% for (let community of communities) {%>
-      <a
-        href="/communities/<%= community._id%>"
-       
-      >
+      
         <%- include('./../partials/communityCard',{community,currentUser}) -%>
-      </a>
-
-
-      <!-- <%if(currentUser && !community.members.includes(currentUser._id)){ %> 
-      <a
-        href="/communities/<%= community._id%>/join"
-        onMouseOver="this.style.color='#ffffff'"
-        onMouseOut="this.style.color='#45046a'"
-        class="btn btn-success"
-      >
-        Join Community
-      </a>
-      <%} else if(currentUser && community.owner.equals(currentUser._id)){ %> 
-
-      <a
-        href="/communities/<%= community._id%>/edit"
-        onMouseOver="this.style.color='#ffffff'"
-        onMouseOut="this.style.color='#45046a'"
-        class="btn btn-success"
-      >
-        Edit Community
-      </a> -->
-
-      <!-- <form action="/communities/<%= community._id%>?_method=DELETE" method="post">
-        <button>Delete Community</button>
-      </form> -->
-      <% } %> 
+      
     <% } %>
   </div>
 </div>
