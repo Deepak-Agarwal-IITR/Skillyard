@@ -13,7 +13,7 @@
                 <p class="card-text ml-auto ">
                     <small class="text-white">
                         <%if(post.anonymouslyAsked){%>
-                            Anonymously postedsked on <%=post.time1%>
+                            Anonymously posted on <%=post.time1%>
                                 <%} else if(currentUser && post.author._id.equals(currentUser._id)){ %>
                                     Posted by you on <%=post.time1%>
 

@@ -27,10 +27,10 @@ var postSchema = new mongoose.Schema({
             ref: "Comment"
         }
     ],
-    // anonymouslyAsked: {
-    //     type: Boolean,
-    //     default: false
-    // },
+    anonymouslyAsked: {
+        type: Boolean,
+        default: false
+    },
     likedby: [
         {
             type: mongoose.Schema.Types.ObjectId,
