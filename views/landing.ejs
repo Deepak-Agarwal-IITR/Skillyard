@@ -60,14 +60,16 @@
             <li class="nav-item">
               <a class="nav-link my-link" href="/communities">Communities</a>
             </li>
-            <% if(currentUser){ %> 
-              <li class="nav-item">
-                <a class="nav-link my-link" href="/communities/my">My Communities</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link my-link" href="/bookmarks">Bookmarks</a>
-              </li> 
-            <% } %> 
+            <% if(currentUser){ %>
+            <li class="nav-item">
+              <a class="nav-link my-link" href="/communities/my"
+                >My Communities</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link my-link" href="/bookmarks">Bookmarks</a>
+            </li>
+            <% } %>
           </ul>
           <ul class="navbar-nav ml-auto">
             <% if(!currentUser){ %>
@@ -184,7 +186,6 @@
           >
             <img
               src="/images/logo.jpeg"
-              class="img-fluid animate1"
               width="400"
               alt="Commom img"
               style="border-radius: 50%"
