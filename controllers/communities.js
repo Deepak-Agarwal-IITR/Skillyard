@@ -9,7 +9,6 @@ module.exports.allCommunities = async (req,res)=>{
 
 module.exports.myCommunities = async (req,res)=>{
     const communities = await Community.find({owner:req.user._id})
-    console.log(communities)
     res.render('communities/mycommunities',{communities})
 }
 module.exports.createNewCommunity = async (req,res)=>{
@@ -18,7 +17,7 @@ module.exports.createNewCommunity = async (req,res)=>{
     community.members.push(req.user._id);
     await community.save();
     req.flash('success',"Created a new community")
-    res.redirect("/communities")
+    res.redirect(`/communities/${community._id}`)
 }
 
 module.exports.renderNewCommunityForm = (req,res)=>{

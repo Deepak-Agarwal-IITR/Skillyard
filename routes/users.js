@@ -17,4 +17,5 @@ router.get('/logout',users.logout)
 
 router.get('/bookmarks',isLoggedIn,catchAsync(users.bookmarks))
 
+router.get("/ranking", isLoggedIn, catchAsync(users.ranking));
 module.exports = router;
