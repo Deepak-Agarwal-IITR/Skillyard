@@ -25,4 +25,6 @@ router.route('/:id/edit')
 
 router.get('/:id/join', isLoggedIn, isAlreadyJoinedCommunity, catchAsync(communities.joinCommunity))
 
+router.get("/:id/trending", isLoggedIn, catchAsync(communities.trending));
+
 module.exports = router;

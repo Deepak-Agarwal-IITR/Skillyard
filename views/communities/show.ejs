@@ -26,15 +26,15 @@
           <span class="d-none d-md-inline">Create new post</span>
         </a>
 
-        <!-- <form action="/trending/<%= community._id %>" method="get">
+        <form action="/communities/<%= community._id %>/trending" method="get">
           <button
             class="btn btn-primary ml-auto"
             style="display: inline-flex; vertical-align: middle"
           >
             <span class="material-icons"> trending_up </span>
-            <span class="d-none d-md-inline">Get Trending Discussions</span>
+            <span class="d-none d-md-inline">Get Trending Posts</span>
           </button>
-        </form> -->
+        </form>
       </div>
 
       <% for(let post of community.posts){%>
