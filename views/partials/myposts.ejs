@@ -36,13 +36,13 @@
         </div>
         <div style="padding-top: 6px; padding-left:8px;">
             <%if(post.comments.length==1){%>
-                <span class="text-success">(<%=post.comments.length%> Answer)</span>
+                <span class="text-success">(<%=post.comments.length%> Comment)</span>
 
                 <%} else if(post.comments.length>1){%>
-                    <span class="text-success">(<%=post.comments.length%> Answers)</span>
+                    <span class="text-success">(<%=post.comments.length%> Comments)</span>
 
                     <%} else {%>
-                        <span class="text-danger">(!Unanswered)</span>
+                        <span class="text-danger">(!UnCommented)</span>
                         <%}%>
         </div>
 
